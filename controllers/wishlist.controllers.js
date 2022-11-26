@@ -58,7 +58,7 @@ const getSingleWishlist = async (req, res) => {
 const updateWishlist = async (req, res) => {
   try {
     const respons = await Wishlist.findOne({_id: ObjectId(req.params.id)});
-      respons.reviewText= req.body.reviewText;
+      respons.status= req.body.status;
     await respons.save()
     .then(respons =>{
       res.status(200).json({

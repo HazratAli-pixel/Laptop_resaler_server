@@ -97,6 +97,44 @@ const getSingleProducts = async (req, res) => {
     }
 };
 
+const getAllReport = async (req, res) => {
+    try{
+        const respons = await ProductsModel.find({reportFlag: true});
+        res.status(200).json({
+          message:"success",
+          respons
+        });
+    }
+    catch(error){
+        res.status(500).send(error.message);
+    }
+};
+
+const getAllSold = async (req, res) => {
+    try{
+        const respons = await ProductsModel.find({soldFlag: true});
+        res.status(200).json({
+          message:"success",
+          respons
+        });
+    }
+    catch(error){
+        res.status(500).send(error.message);
+    }
+};
+const getAllAdvertise = async (req, res) => {
+    try{
+        const respons = await ProductsModel.find({advertiseFlag: true});
+        res.status(200).json({
+          message:"success",
+          respons
+        });
+    }
+    catch(error){
+        res.status(500).send(error.message);
+    }
+};
+
 
 const updateSold = async (req, res) => {
   try {
@@ -184,4 +222,7 @@ module.exports = {
   saveProducts,
   getProductsByUser, 
   getProductsByCategory,
+  getAllReport, 
+  getAllSold, 
+  getAllAdvertise,
 };

@@ -9,8 +9,8 @@ const saveBooking = async (req, res) => {
     const newReview = new Booking({
         userId: req.body.userId,
         productId: req.body.productId,
-        trxId: req.body.trxId,
-        price: req.body.price,
+        phone: req.body.phone,
+        location: req.body.location,
       });
       await newReview.save();
       res.status(201).json(newReview);
@@ -38,7 +38,6 @@ const getAllBooking = async (req, res) => {
       res.status(500).send(error.message);
   }
 };
-
 
 
 const getSingleBooking = async (req, res) => {
@@ -103,6 +102,6 @@ module.exports = {
   deleteBooking, 
   updateBooking, 
   checkBooking, 
-  saveBooking
+  saveBooking,
 };
 
