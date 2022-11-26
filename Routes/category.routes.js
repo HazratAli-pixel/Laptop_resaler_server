@@ -10,6 +10,7 @@ const router = express.Router();
 
 
 router.get('/list/', getAllCategory);
+
 router.delete('/:id', deleteCategory);
 router.patch('/:id', updateCategory);
 router.post('/', saveCategory);
