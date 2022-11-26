@@ -54,7 +54,7 @@ const updateCategory = async (req, res) => {
 
 const checkCategory = async (req, res) => {
     res.status(201).json({
-      message: "Check Review Get Route is working"
+      message: "Check category Get Route is working"
     })
 };
 

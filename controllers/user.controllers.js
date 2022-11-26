@@ -1,14 +1,13 @@
 const { ObjectId } = require("mongodb");
-const Review = require("../modals/user.model");
-const saveReview = async (req, res) => {
+const UserModal = require("../modals/user.model");
+const saveUser = async (req, res) => {
   try{
-    const newReview = new Review({
-        userId: req.body.userId,
-        name: req.body.name,
-        imgUrl: req.body.imgUrl,
-        serviceId: req.body.serviceId,
-        reviewText: req.body.reviewText,
-        rating: req.body.rating,
+    const newReview = new UserModal({
+        displayName: req.body.name,
+        email: req.body.email,
+        address: req.body.address,
+        userType: req.body.userType,
+        photoUrl: req.body.photoUrl,
       });
       await newReview.save();
       res.status(201).json(newReview);
@@ -19,9 +18,9 @@ const saveReview = async (req, res) => {
 };
 
 
-const getAllReview = async (req, res) => {
+const getAllUser = async (req, res) => {
   try{
-    await Review.find().sort([['createdOn', -1]]) // -1 for decending order and 1 for accending order
+    await UserModal.find() // -1 for decending order and 1 for accending order
     .then(respons =>{
       res.status(200).json({
         message:"success",
@@ -37,55 +36,51 @@ const getAllReview = async (req, res) => {
   }
 };
 
-const getReviewByUser = async (req, res) => {
-    try{
-      const decod_info = req.decoded
-      const {userId } = req.query
-      if(decod_info.userId !== userId){
-        res.status(403).send({ message:"Unauthorized Access"})
-      }
-      else{
-        const respons = await Review.find({userId: userId}).sort([['createdOn', -1]])  // -1 for decending order and 1 for accending order
-        res.status(200).json({
-          message:"success",
-          respons
-        });
-      }
-      
-    }
-    catch(error){
-        res.status(500).send(error.message);
-    }
-};
-const getReviewByService = async (req, res) => {
-    try{
-        const respons = await Review.find({serviceId: req.params.id}).sort([['createdOn', -1]]);
-        res.status(200).json({
-          message:"success",
-          respons
-        });
-    }
-    catch(error){
-        res.status(500).send(error.message);
-    }
-};
-const getSingleReview = async (req, res) => {
-    try{
-        const respons = await Review.find({_id: ObjectId(req.params.id)});
-        res.status(200).json({
-          message:"success",
-          respons
-        });
-    }
-    catch(error){
-        res.status(500).send(error.message);
-    }
-};
-
-
-const updateReview = async (req, res) => {
+const verifyUser = async (req, res) => {
   try {
-    const respons = await Review.findOne({_id: ObjectId(req.params.id)});
+    const respons = await UserModal.findOne({_id: ObjectId(req.params.id)});
+      respons.userFlag= true;
+    await respons.save()
+    .then(respons =>{
+      res.status(200).json({
+        message:"Information updated successfully",
+        respons
+      });
+    })
+  } 
+  catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+const getUserByService = async (req, res) => {
+    try{
+        const respons = await UserModal.find({serviceId: req.params.id}).sort([['createdOn', -1]]);
+        res.status(200).json({
+          message:"success",
+          respons
+        });
+    }
+    catch(error){
+        res.status(500).send(error.message);
+    }
+};
+const getSingleUser = async (req, res) => {
+    try{
+        const respons = await UserModal.find({_id: ObjectId(req.params.id)});
+        res.status(200).json({
+          message:"success",
+          respons
+        });
+    }
+    catch(error){
+        res.status(500).send(error.message);
+    }
+};
+
+
+const updateUser = async (req, res) => {
+  try {
+    const respons = await UserModal.findOne({_id: ObjectId(req.params.id)});
       respons.reviewText= req.body.reviewText;
     await respons.save()
     .then(respons =>{
@@ -101,16 +96,16 @@ const updateReview = async (req, res) => {
 
 
 
-const checkReview = async (req, res) => {
+const checkUser = async (req, res) => {
     res.status(201).json({
-      message: "Check Review Get Route is working"
+      message: "Check User Get Route is working"
     })
 };
 
 
-const deleteReview = async (req, res) => {
+const deleteUser = async (req, res) => {
     try{
-        await Review.deleteOne({_id: ObjectId(req.params.id)})
+        await UserModal.deleteOne({_id: ObjectId(req.params.id)})
         .then(respons=>{
           res.status(200).json({
               message: "Review is deleted",
@@ -125,12 +120,12 @@ const deleteReview = async (req, res) => {
 
 
 module.exports = {
-  getAllReview,
-  getReviewByUser,
-  checkReview,
-  saveReview,
-  updateReview,
-  deleteReview,
-  getSingleReview,
-  getReviewByService,
+  getAllUser, 
+  verifyUser, 
+  getSingleUser, 
+  getUserByService, 
+  checkUser, 
+  updateUser, 
+  deleteUser, 
+  saveUser
 };

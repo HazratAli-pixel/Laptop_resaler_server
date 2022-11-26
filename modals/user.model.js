@@ -7,10 +7,6 @@ current.getMinutes(),current.getSeconds()));
 
 
 const reviewSchema = mongoose.Schema({
-    userId:{
-        type: String,
-        require:false,
-    },
     displayName:{
         type: String,
         require:true,
@@ -21,9 +17,13 @@ const reviewSchema = mongoose.Schema({
     },
     address:{
         type: String,
-        require:true,
+        default:''
     },
     userType:{
+        type: String,
+        default: "Buyer"
+    },
+    photoUrl:{
         type: String,
         require:true,
     },
