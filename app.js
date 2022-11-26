@@ -5,6 +5,8 @@ require('./config/db');
 const userRouter = require("./Routes/user.routes");
 const categoryRouter = require("./Routes/category.routes");
 const productsRouter = require("./Routes/products.routes");
+const paymentRouter = require("./Routes/payment.routes");
+const bookingRouter = require("./Routes/booking.routes");
 // const serviceRouter = require("./Routes/service.routes");
 const jwtRouter = require("./Routes/jwt.routes");
 
@@ -18,6 +20,8 @@ app.use(express.urlencoded({extended:true}));
 app.use ('/user', userRouter); 
 app.use ('/category', categoryRouter); 
 app.use ('/products', productsRouter); 
+app.use ('/payment', paymentRouter); 
+app.use ('/booking', bookingRouter); 
 // app.use ('/service', serviceRouter); 
 app.use ('/jwt', jwtRouter); 
 
