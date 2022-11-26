@@ -4,6 +4,7 @@ const cors = require("cors");
 require('./config/db');
 const userRouter = require("./Routes/user.routes");
 const categoryRouter = require("./Routes/category.routes");
+const productsRouter = require("./Routes/products.routes");
 // const serviceRouter = require("./Routes/service.routes");
 const jwtRouter = require("./Routes/jwt.routes");
 
@@ -16,6 +17,7 @@ app.use(express.urlencoded({extended:true}));
 //Main Route List
 app.use ('/user', userRouter); 
 app.use ('/category', categoryRouter); 
+app.use ('/products', productsRouter); 
 // app.use ('/service', serviceRouter); 
 app.use ('/jwt', jwtRouter); 
 
