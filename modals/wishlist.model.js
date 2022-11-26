@@ -15,14 +15,6 @@ const reviewSchema = mongoose.Schema({
         type: String,
         require:true,
     },
-    phone:{
-        type: String,
-        require:true,
-    },
-    location:{
-        type: Number,
-        require:true,
-    },
     status:{
         type: Boolean,
         default:false
@@ -33,4 +25,4 @@ const reviewSchema = mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('booking',reviewSchema); //furst parameter is table aname and second parameter is schema name
+module.exports = mongoose.model('wishlist',reviewSchema); //furst parameter is table aname and second parameter is schema name
