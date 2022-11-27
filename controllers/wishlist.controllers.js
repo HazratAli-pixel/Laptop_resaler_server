@@ -20,6 +20,7 @@ const saveWishlist = async (req, res) => {
 
 
 const getAllWishlist = async (req, res) => {
+  const respons2 = await products.find({_id: ObjectId(req.params.id)});
   try{
     await Wishlist.find() // -1 for decending order and 1 for accending order
     .then(respons =>{
@@ -41,12 +42,12 @@ const getAllWishlist = async (req, res) => {
 
 const getSingleWishlist = async (req, res) => {
     try{
-        const respons = await Wishlist.find({productId: req.params.id});
-        const respons2 = await products.find({_id: ObjectId(req.params.id)});
+        const wishlistbyuser = await Wishlist.find({userId: req.params.email});
+        const wishid = wishlistbyuser.map(list=> ObjectId(list.productId))
+        const respons = await products.find({ _id : { $in : wishid }});
         res.status(200).json({
           message:"success",
           respons,
-          respons2
         });
     }
     catch(error){

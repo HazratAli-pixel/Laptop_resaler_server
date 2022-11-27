@@ -8,7 +8,6 @@ const productsRouter = require("./Routes/products.routes");
 const paymentRouter = require("./Routes/payment.routes");
 const bookingRouter = require("./Routes/booking.routes");
 const wishlistRouter = require("./Routes/wishlist.routes");
-// const serviceRouter = require("./Routes/service.routes");
 const jwtRouter = require("./Routes/jwt.routes");
 
 
@@ -24,7 +23,6 @@ app.use ('/products', productsRouter);
 app.use ('/payment', paymentRouter); 
 app.use ('/booking', bookingRouter); 
 app.use ('/wishlist', wishlistRouter); 
-// app.use ('/service', serviceRouter); 
 app.use ('/jwt', jwtRouter); 
 
 

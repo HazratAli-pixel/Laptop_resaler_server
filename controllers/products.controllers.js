@@ -27,7 +27,7 @@ const saveProducts = async (req, res) => {
 
 const getAllProducts = async (req, res) => {
   try{
-    await ProductsModel.find() // -1 for decending order and 1 for accending order
+    await ProductsModel.find({soldFlag: false}) // -1 for decending order and 1 for accending order
     .then(respons =>{
       res.status(200).json({
         message:"success",
@@ -124,7 +124,7 @@ const getAllSold = async (req, res) => {
 };
 const getAllAdvertise = async (req, res) => {
     try{
-        const respons = await ProductsModel.find({advertiseFlag: true});
+        const respons = await ProductsModel.find({$and: [{advertiseFlag: true}, {soldFlag: false}]});
         res.status(200).json({
           message:"success",
           respons
