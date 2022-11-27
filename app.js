@@ -26,8 +26,9 @@ app.use ('/wishlist', wishlistRouter);
 app.use ('/jwt', jwtRouter); 
 
 
+
 app.get ('/', (req, res, next)=>{
-    res.send('<h1>Welcome to Assignment 12 Home Route</h1>');
+    res.send('Welcome Assignment 12 and final Assignmnet');
 })
 
 
