@@ -2,7 +2,7 @@ const { ObjectId } = require("mongodb");
 const UserModal = require("../modals/user.model");
 const saveUser = async (req, res) => {
   try{
-    const respons = await UserModal.findOne({email:req.body.email}) 
+    const respons = await UserModal.find({email:req.body.email}) 
     if(respons.length == 0){
       const newReview = new UserModal({
           displayName: req.body.name,

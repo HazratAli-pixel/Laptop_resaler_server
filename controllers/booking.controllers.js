@@ -6,7 +6,7 @@ const products = require("../modals/products.model");
 
 const saveBooking = async (req, res) => {
   try{
-    const respons = await Booking.findOne({productId: req.body.productId})
+    const respons = await Booking.find({productId: req.body.productId})
     if(respons.length==0){
       const newReview = new Booking({
           userId: req.body.userId,

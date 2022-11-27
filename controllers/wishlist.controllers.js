@@ -6,7 +6,7 @@ const products = require("../modals/products.model");
 
 const saveWishlist = async (req, res) => {
   try{
-    const respons = await Wishlist.findOne({productId: req.body.productId})
+    const respons = await Wishlist.find({productId: req.body.productId})
     if(respons.length ==0){
       const newReview = new Wishlist({
           userId: req.body.userId,

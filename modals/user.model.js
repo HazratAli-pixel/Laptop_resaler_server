@@ -21,7 +21,7 @@ const reviewSchema = mongoose.Schema({
     },
     userType:{
         type: String,
-        default: "Buyer"
+        require:true,
     },
     photoUrl:{
         type: String,
