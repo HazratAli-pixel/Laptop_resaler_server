@@ -1,7 +1,7 @@
-# Project name : Photo_Artistry
+# Project name : Laptop Resaler
 
-1. [Photo_Artistry](https://open-learning-6d337.web.app/ "Photo_Artistry")
-2. [Vercel_link](https://photoartistry.vercel.app// "Photo_Artistry")
+1. [Laptop Resaler](https://laptopreseler.web.app/ "Laptop Resaler")
+2. [Vercel_link](https://laptop-reseler-server-side-hazratali-pixel.vercel.app/ "Laptop Resaler")
 
 ## Which Technology are useing here
 
@@ -9,7 +9,7 @@
     2. dotenv ব্যবহার করা হয়েছে
     3. expree, node, nodemon,
     4. Mongoose
-    5. JSON WEB TOKEN (JWT)
+    5. Use JSON WEB TOKEN (JWT)
 
 ## Author information
 
