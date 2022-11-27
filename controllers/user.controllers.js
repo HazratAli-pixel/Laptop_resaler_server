@@ -2,15 +2,23 @@ const { ObjectId } = require("mongodb");
 const UserModal = require("../modals/user.model");
 const saveUser = async (req, res) => {
   try{
-    const newReview = new UserModal({
-        displayName: req.body.name,
-        email: req.body.email,
-        address: req.body.address,
-        userType: req.body.userType,
-        photoUrl: req.body.photoUrl,
+    const respons = await UserModal.findOne({email:req.body.email}) 
+    if(respons.length == 0){
+      const newReview = new UserModal({
+          displayName: req.body.name,
+          email: req.body.email,
+          address: req.body.address,
+          userType: req.body.userType,
+          photoUrl: req.body.photoUrl,
+        });
+        await newReview.save();
+        res.status(201).json(newReview);
+    }
+    else{
+      res.status(201).json({
+        message: "Allready Registered User"
       });
-      await newReview.save();
-      res.status(201).json(newReview);
+    }
   }
   catch(error){
     res.status(500).send(error.message);    
@@ -52,18 +60,7 @@ const verifyUser = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
-const getUserByService = async (req, res) => {
-    try{
-        const respons = await UserModal.find({serviceId: req.params.id}).sort([['createdOn', -1]]);
-        res.status(200).json({
-          message:"success",
-          respons
-        });
-    }
-    catch(error){
-        res.status(500).send(error.message);
-    }
-};
+
 const getSingleUser = async (req, res) => {
     try{
         const respons = await UserModal.find({_id: ObjectId(req.params.id)});
@@ -82,6 +79,22 @@ const updateUser = async (req, res) => {
   try {
     const respons = await UserModal.findOne({_id: ObjectId(req.params.id)});
       respons.reviewText= req.body.reviewText;
+    await respons.save()
+    .then(respons =>{
+      res.status(200).json({
+        message:"Information updated successfully",
+        respons
+      });
+    })
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+const makeAdmin = async (req, res) => {
+  try {
+
+    const respons = await UserModal.findOne({_id: ObjectId(req.params.id)});
+      respons.userType= req.body.reviewText;
     await respons.save()
     .then(respons =>{
       res.status(200).json({
@@ -123,9 +136,9 @@ module.exports = {
   getAllUser, 
   verifyUser, 
   getSingleUser, 
-  getUserByService, 
   checkUser, 
   updateUser, 
   deleteUser, 
-  saveUser
+  saveUser,
+  makeAdmin
 };

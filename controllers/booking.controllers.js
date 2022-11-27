@@ -6,14 +6,22 @@ const products = require("../modals/products.model");
 
 const saveBooking = async (req, res) => {
   try{
-    const newReview = new Booking({
-        userId: req.body.userId,
-        productId: req.body.productId,
-        phone: req.body.phone,
-        location: req.body.location,
+    const respons = await Booking.findOne({productId: req.body.productId})
+    if(respons.length==0){
+      const newReview = new Booking({
+          userId: req.body.userId,
+          productId: req.body.productId,
+          phone: req.body.phone,
+          location: req.body.location,
+        });
+        await newReview.save();
+        res.status(201).json(newReview);
+    }
+    else{
+      res.status(201).json({
+        message: "You Allready booked this product."
       });
-      await newReview.save();
-      res.status(201).json(newReview);
+    }
   }
   catch(error){
     res.status(500).send(error.message);    
