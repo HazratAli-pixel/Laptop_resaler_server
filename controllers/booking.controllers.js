@@ -43,7 +43,26 @@ const getAllBooking = async (req, res) => {
 const getSingleBooking = async (req, res) => {
     try{
         const respons = await Booking.find({_id: ObjectId(req.params.id)});
-        const respons2 = await products.find({_id: ObjectId(req.params.id)});
+        res.status(200).json({
+          message:"success",
+          respons
+        });
+    }
+    catch(error){
+        res.status(500).send(error.message);
+    }
+};
+const getUserBooking = async (req, res) => {
+    try{
+        const bookinglist = await Booking.find({userId: req.params.email});
+        const booklist = bookinglist.map(list=> ObjectId(list.productId))
+        const booklist_id = bookinglist.map(list=> list._id)
+        const filtereditem = await products.find({ _id : { $in : booklist }});
+        let i=0;
+        const respons = filtereditem.map(item =>{
+          const newitem = {...item._doc, "bookingId":booklist_id[i]}
+          return newitem
+        })
         res.status(200).json({
           message:"success",
           respons
@@ -98,7 +117,8 @@ const deleteBooking = async (req, res) => {
 
 module.exports = {
   getAllBooking, 
-  getSingleBooking, 
+  getSingleBooking,
+  getUserBooking,
   deleteBooking, 
   updateBooking, 
   checkBooking, 

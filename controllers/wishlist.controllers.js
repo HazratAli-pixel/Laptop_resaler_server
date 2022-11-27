@@ -44,7 +44,15 @@ const getSingleWishlist = async (req, res) => {
     try{
         const wishlistbyuser = await Wishlist.find({userId: req.params.email});
         const wishid = wishlistbyuser.map(list=> ObjectId(list.productId))
-        const respons = await products.find({ _id : { $in : wishid }});
+        const wish_id = wishlistbyuser.map(list=> list._id)
+        const filtereditem = await products.find({ _id : { $in : wishid }});
+        let i=0;
+        const respons = filtereditem.map(item =>{
+          const newitem = {...item._doc, "wishlistId":wish_id[i]}
+          i++
+          return newitem
+        })
+
         res.status(200).json({
           message:"success",
           respons,
