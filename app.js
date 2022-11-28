@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require("cors");
 require('./config/db');
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const userRouter = require("./Routes/user.routes");
 const categoryRouter = require("./Routes/category.routes");
 const productsRouter = require("./Routes/products.routes");
@@ -24,7 +25,22 @@ app.use ('/payment', paymentRouter);
 app.use ('/booking', bookingRouter); 
 app.use ('/wishlist', wishlistRouter); 
 app.use ('/jwt', jwtRouter); 
+app.post('/create-payment-intent', async (req, res) => {
+    const booking = req.body;
+    const price = booking.price;
+    const amount = price * 100;
 
+    const paymentIntent = await stripe.paymentIntents.create({
+        currency: 'usd',
+        amount: amount,
+        "payment_method_types": [
+            "card"
+        ]
+    });
+    res.send({
+        clientSecret: paymentIntent.client_secret,
+    });
+});
 
 
 app.get ('/', (req, res, next)=>{

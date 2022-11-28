@@ -43,6 +43,57 @@ const getAllUser = async (req, res) => {
       res.status(500).send(error.message);
   }
 };
+const getSalerUser = async (req, res) => {
+  try{
+    await UserModal.find({userType: "Saler"}) 
+    .then(respons =>{
+      res.status(200).json({
+        message:"success",
+        respons
+      });
+    })
+    .catch(error =>{
+      res.status(500).send(error.message);
+    })
+  }
+  catch(error){
+      res.status(500).send(error.message);
+  }
+};
+const getBuyereUser = async (req, res) => {
+  try{
+    await UserModal.find({userType: "Buyer"}) 
+    .then(respons =>{
+      res.status(200).json({
+        message:"success",
+        respons
+      });
+    })
+    .catch(error =>{
+      res.status(500).send(error.message);
+    })
+  }
+  catch(error){
+      res.status(500).send(error.message);
+  }
+};
+const getAdminUser = async (req, res) => {
+  try{
+    await UserModal.find({userType: "Admin"}) 
+    .then(respons =>{
+      res.status(200).json({
+        message:"success",
+        respons
+      });
+    })
+    .catch(error =>{
+      res.status(500).send(error.message);
+    })
+  }
+  catch(error){
+      res.status(500).send(error.message);
+  }
+};
 
 const verifyUser = async (req, res) => {
   try {
@@ -63,7 +114,7 @@ const verifyUser = async (req, res) => {
 
 const getSingleUser = async (req, res) => {
     try{
-        const respons = await UserModal.find({_id: ObjectId(req.params.id)});
+        const respons = await UserModal.findOne({email: req.params.email});
         res.status(200).json({
           message:"success",
           respons
@@ -78,7 +129,7 @@ const getSingleUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const respons = await UserModal.findOne({_id: ObjectId(req.params.id)});
-      respons.reviewText= req.body.reviewText;
+      respons.userStatus= req.body.status;
     await respons.save()
     .then(respons =>{
       res.status(200).json({
@@ -94,7 +145,7 @@ const makeAdmin = async (req, res) => {
   try {
 
     const respons = await UserModal.findOne({_id: ObjectId(req.params.id)});
-      respons.userType= req.body.reviewText;
+      respons.userType= req.body.userType;
     await respons.save()
     .then(respons =>{
       res.status(200).json({
@@ -121,7 +172,7 @@ const deleteUser = async (req, res) => {
         await UserModal.deleteOne({_id: ObjectId(req.params.id)})
         .then(respons=>{
           res.status(200).json({
-              message: "Review is deleted",
+              message: "Usre is deleted",
               respons
             });
         })
@@ -140,5 +191,8 @@ module.exports = {
   updateUser, 
   deleteUser, 
   saveUser,
-  makeAdmin
+  makeAdmin,
+  getBuyereUser, 
+  getSalerUser,
+  getAdminUser,
 };

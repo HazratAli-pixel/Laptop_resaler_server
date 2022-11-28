@@ -6,18 +6,20 @@ const products = require("../modals/products.model");
 
 const saveWishlist = async (req, res) => {
   try{
-    const respons = await Wishlist.find({productId: req.body.productId})
+    const respons = await Wishlist.find({productId: req.body.productId, userId: req.body.userId})
     if(respons.length ==0){
       const newReview = new Wishlist({
           userId: req.body.userId,
           productId: req.body.productId,
         });
         await newReview.save();
-        res.status(201).json(newReview);
+        res.status(201).json({
+          message: "Product added to wishlist",
+          newReview});
     }
     else{
-      res.status(201).json({
-        message: "Allready Reported to this product"
+      res.status(202).json({
+        message: "Allready added to wishlist"
       });
     }
   }
